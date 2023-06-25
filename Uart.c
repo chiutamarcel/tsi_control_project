@@ -34,19 +34,10 @@ void initUART0(uint32_t baud_rate)
 	//Fiecare pin pune la dispozitie mai multe functionalitati 
 	//la care avem acces prin intermediul multiplexarii
 	
-	/*
 	PORTA->PCR[1] = ~PORT_PCR_MUX_MASK;
 	PORTA->PCR[1] = PORT_PCR_ISF_MASK | PORT_PCR_MUX(2); // Configurare RX pentru UART0
 	PORTA->PCR[2] = ~PORT_PCR_MUX_MASK;
 	PORTA->PCR[2] = PORT_PCR_ISF_MASK | PORT_PCR_MUX(2); // Configurare TX pentru UART0
-	*/
-	
-	/*
-	PORTE->PCR[21] = ~PORT_PCR_MUX_MASK;
-	PORTE->PCR[21] = PORT_PCR_ISF_MASK | PORT_PCR_MUX(4); // Configurare RX pentru UART0
-	PORTE->PCR[20] = ~PORT_PCR_MUX_MASK;
-	PORTE->PCR[20] = PORT_PCR_ISF_MASK | PORT_PCR_MUX(4); // Configurare TX pentru UART0
-	*/
 	
 	
 	
@@ -106,14 +97,18 @@ void UART0_IRQHandler(void) {
 
 
 void UART0_IRQHandler(void) {
-	uint8_t tsi_output = 'a';
+	/*
+	uint8_t TSI_Readings = 'a';
 	
-	if (tsi_output >= 'a' && tsi_output < 'z') {
-		tsi_output++;
+	if (TSI_Readings >= 'a' && TSI_Readings < 'z') {
+		TSI_Readings++;
 	} else {
-		tsi_output = 'a';
+		TSI_Readings = 'a';
 	}
 	
 	
-	UART0_Transmit(tsi_output);
+	UART0_Transmit(TSI_Readings);
+	*/
+	UART0_Transmit('c');
+	//UART0_Transmit(UART_output);
 }

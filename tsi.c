@@ -48,6 +48,6 @@ void TSI_init(){
 }
 
 void TSI_update(){
-	TSI_Output = scan();
+	TSI_Readings = scan();
 }
 

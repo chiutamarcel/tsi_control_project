@@ -6,11 +6,12 @@
 #define BAUD_RATE (uint32_t)115200
 
 int main(){
-	//TSI_init();
+	TSI_init();
 	initUART0(BAUD_RATE);
 	
 	while(1) {
-		//TSI_update();
+		TSI_update();
+		UART_output = TSI_Readings;
 	}
 	
 	return 0;

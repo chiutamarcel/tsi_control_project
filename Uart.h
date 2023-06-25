@@ -1,6 +1,6 @@
 #include "MKL25Z4.h"
 
-//static volatile uint8_t tsi_output = 0;
+static volatile uint8_t UART_output = 0;
 
 void UART0_Transmit(uint8_t data); // Functie folostia pentru a trimite un octet catre interfata UART
 //uint8_t UART0_receive(void); // Functie ce returneaza un octet de pe interfata UART, atunci cand acesta exista un buffer
