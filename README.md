@@ -61,3 +61,7 @@ UPDATE:
 - daca vreau sa restartez aplicatia, trebuie sa scot si sa bag inca o data placa, altfel placa nu mai comunica dintr-un motiv sau altul ( nu mai da output nici pe putty ), chiar daca inchid conexiunea la final de script python
 
 - daca incerc sa transmit ce se afla in variabila UART_Output, in aplicatia mea citesc doar 18 si nu se modifica indiferent de unde pun degetul pe placa, doar ca daca dau cu debug, pare sa se actualizeze cele 2 variabile ( UART_Output si TSI_readings )
+
+UPDATE:
+
+- problema pare sa fie de la faptul ca in UART_Transmit, data nu se actualizeaza ( ramane 0x12, adica 18 ), de ce?

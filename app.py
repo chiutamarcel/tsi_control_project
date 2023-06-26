@@ -18,21 +18,21 @@ def serial_com():
         bytesize=8,
         timeout=2
     )
+    
+    ser.write(b'c')
 
     while(running):
-        #print("Out: a")
-        ser.write(b'c')
-        #out='/x55'
         out = ser.read(1)
 
         if out:
             print(str(time.time()) + " Out:" + str(ord(out)))
  
-        sleep(300/1000) # sleep 300 ms
+        sleep(300/1000) # sleep 300 ms 
 
-    ser.close()
+
+    ser.reset_input_buffer()
+    ser.reset_output_buffer()
     print("Exiting....")
-    sys.exit()
 
 def get_input():
     keyboard.wait('space')
