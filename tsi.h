@@ -4,7 +4,7 @@
 
 #include "MKL25Z4.h"
 
-static volatile uint16_t TSI_Readings = 0;
+extern uint16_t TSI_Readings;
 
 void TSI_init();
 void TSI_update();

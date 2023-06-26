@@ -2,6 +2,8 @@ import serial
 import keyboard
 import threading
 import sys
+import time
+from time import sleep
 
 running=True
 
@@ -24,7 +26,9 @@ def serial_com():
         out = ser.read(1)
 
         if out:
-            print("Out:" + str(ord(out)))
+            print(str(time.time()) + " Out:" + str(ord(out)))
+ 
+        sleep(300/1000) # sleep 300 ms
 
     ser.close()
     print("Exiting....")
