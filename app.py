@@ -22,6 +22,9 @@ def serial_com():
     ser.write(b'c')
 
     while(running):
+        ser.reset_input_buffer()
+        ser.reset_output_buffer()
+
         out = ser.read(1)
 
         if out:

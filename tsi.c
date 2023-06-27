@@ -16,6 +16,8 @@ void selectChannel(uint8_t channel){
 }
 
 uint16_t scan(){
+	//NVIC_DisableIRQ();
+	
 	selectChannel(TSI_CH_MAIN);
 	
 	uint16_t cnt;

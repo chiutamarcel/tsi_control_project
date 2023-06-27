@@ -3,8 +3,16 @@
 void UART0_Transmit(uint8_t data)
 {
 	//Punem in asteptare pana cand registrul de transmisie a datelor nu este gol
-	while(!(UART0->S1 & UART0_S1_TDRE_MASK));
-				UART0->D = data;
+	
+	while(!(UART0->S1 & UART0_S1_TDRE_MASK)) {
+		//status = 2;
+	}
+		UART0->D = data;
+	
+	/*
+	if ((UART0->S1 & UART0_S1_TDRE_MASK))
+		UART0->D = data;
+	*/
 	
 }
 
@@ -12,8 +20,15 @@ void UART0_Transmit(uint8_t data)
 uint8_t UART0_receive(void)
 {
 	//Punem in asteptare pana cand registrul de receptie nu este plin
-	while(!(UART0->S1 & UART0_S1_RDRF_MASK));
-				return UART0->D;
+	while(!(UART0->S1 & UART0_S1_RDRF_MASK)){
+		//status = 1;
+	}
+		return UART0->D;
+	
+	/*
+	if ((UART0->S1 & UART0_S1_RDRF_MASK))
+		return UART0->D;
+	*/
 	
 }
 
@@ -76,40 +91,8 @@ void initUART0(uint32_t baud_rate)
 	
 }
 
-/*
-void UART0_IRQHandler(void) {
-		
-	
-		if(UART0->S1 & UART0_S1_RDRF_MASK) {
-			c = UART0->D;
-		}
-	
-			
-		if(c >= 'a' && c <= 'z') {
-			UART0_Transmit(c);
-		} else if ( c >= 'A' && c <= 'Z') {
-			UART0_Transmit(c);
-		} else if(c == 0X0D) {
-			UART0_Transmit(c);
-		}
-}
-*/
-
-
 
 void UART0_IRQHandler(void) {
-	/*
-	uint8_t TSI_Readings = 'a';
-	
-	if (TSI_Readings >= 'a' && TSI_Readings < 'z') {
-		TSI_Readings++;
-	} else {
-		TSI_Readings = 'a';
-	}
-	
-	
-	UART0_Transmit(TSI_Readings);
-	*/
 	//UART0_Transmit(50);
 	UART0_Transmit(UART_output);
 }

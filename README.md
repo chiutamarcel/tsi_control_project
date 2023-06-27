@@ -65,3 +65,18 @@ UPDATE:
 UPDATE:
 
 - problema pare sa fie de la faptul ca in UART_Transmit, data nu se actualizeaza ( ramane 0x12, adica 18 ), de ce?
+
+UPDATE:
+
+- daca dau debug si pun breakpoint in handler, se actualizeaza si valoarea si este si transmisa bine catre aplicatie, doar ca se transmite un singur caracter, dupa care trebuie sa restartez aplicatia python ca sa ajunga iar la breakpoint in handler
+
+- daca fac variabilele volatile nu schimba cu nimic
+
+27-06-2023
+
+- am creeat o variabila de status pe care o schimb in mai multe while-uri ca sa vad unde se blocheaza programul
+
+- am observat ca daca opresc debugger-ul in mijlocul transmisiunii ramane blocat in while-ul din scan() din modulul de TSI
+
+- de asemenea aplicatia python pare sa tina tot ce se transmite intr-un buffer => o gramada de valori transmise deja => nu pot vedea defapt ce se transmite in realtime ( adica daca macar placa mai transmite in momentul de fata )
+=> de aia inca primeam valori la consola, chiar daca placa era blocata in while in realitate. solutie: dau clear la buffere inainte sa mai citesc

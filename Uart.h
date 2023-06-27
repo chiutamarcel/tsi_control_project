@@ -1,6 +1,7 @@
 #include "MKL25Z4.h"
 
 extern uint8_t UART_output;
+//extern uint8_t status;
 
 void UART0_Transmit(uint8_t data); // Functie folostia pentru a trimite un octet catre interfata UART
 //uint8_t UART0_receive(void); // Functie ce returneaza un octet de pe interfata UART, atunci cand acesta exista un buffer
