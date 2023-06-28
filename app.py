@@ -19,7 +19,7 @@ def serial_com():
         timeout=2
     )
     
-    ser.write(b'c')
+    #ser.write(b'c')
 
     while(running):
         ser.reset_input_buffer()
@@ -29,8 +29,15 @@ def serial_com():
 
         if out:
             print(str(time.time()) + " Out:" + str(ord(out)))
- 
-        sleep(300/1000) # sleep 300 ms 
+
+        #print("in_waiting: " + str(ser.in_waiting))
+        #print("out_waiting: " + str(ser.out_waiting))
+
+        # send a character to continue the transmission
+        if (ser.in_waiting == 0):
+            ser.write(b'c') 
+
+        #sleep(300/1000) # sleep 300 ms 
 
 
     ser.reset_input_buffer()

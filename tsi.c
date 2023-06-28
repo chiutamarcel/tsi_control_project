@@ -20,7 +20,7 @@ uint16_t scan(){
 	
 	selectChannel(TSI_CH_MAIN);
 	
-	uint16_t cnt;
+	uint16_t cnt = 0;
 	
 	// Reset out of range bit
 	TSI0->GENCS &= ~TSI_GENCS_OUTRGF_MASK;
@@ -28,10 +28,14 @@ uint16_t scan(){
 	// Start scan
 	TSI0->DATA |= TSI_DATA_SWTS_MASK;
 	
+	/*
+	
 	// Wait until scan has ended
 	while((TSI0->GENCS & TSI_GENCS_EOSF_MASK) == 0);
-	
 	cnt = (TSI0->DATA & TSI_DATA_TSICNT_MASK) >> TSI_DATA_TSICNT_SHIFT;
+	
+	*/
+	
 	
 	return cnt;
 }
@@ -46,10 +50,19 @@ void TSI_init(){
 									TSI_GENCS_STPE_MASK 	| // Enable TSI low power functioning ( just in case )
 									TSI_GENCS_ESOR_MASK  	;	// End of scan interrupt ( not end of range )
 	
+	TSI0->GENCS |=	TSI_GENCS_TSIIEN_MASK ; // enable tsi interrupts to enable dma
+	
 	TSI0->GENCS &=	~TSI_GENCS_STM_MASK;		// Enable software interrupt mode
+	
+	NVIC_EnableIRQ(TSI0_IRQn);
 }
 
 void TSI_update(){
-	TSI_Readings = scan();
+	//TSI_Readings = scan();
+	scan();
+}
+
+void TSI0_IRQHandler() {
+	TSI_Readings = (TSI0->DATA & TSI_DATA_TSICNT_MASK) >> TSI_DATA_TSICNT_SHIFT;
 }
 

@@ -80,3 +80,11 @@ UPDATE:
 
 - de asemenea aplicatia python pare sa tina tot ce se transmite intr-un buffer => o gramada de valori transmise deja => nu pot vedea defapt ce se transmite in realtime ( adica daca macar placa mai transmite in momentul de fata )
 => de aia inca primeam valori la consola, chiar daca placa era blocata in while in realitate. solutie: dau clear la buffere inainte sa mai citesc
+
+- de ce ramane placa blocata pe scan? de ce nu se termina scan-ul? ( pentru ca daca rezolv asta rezolv si problema )
+
+28-06-2023
+
+- am decis sa incerc sa lucrez cu intreruperi si pentru TSI pentru a evita problemele legate de flag-ul EOSF, flag care pare sa fie setat pe 1 o instantanee => pot aparea probleme daca nu apuca while-ul sa vada acea valoare de 1 in acel moment precis
+
+- handler-ul intreruperii de TSI0 pare sa se execute fara probleme, singurul lucru dubios este faptul ca in TSICNT se citeste mereu valoarea FFFF

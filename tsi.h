@@ -7,7 +7,8 @@
 extern uint16_t TSI_Readings;
 //extern uint8_t status;
 
-void TSI_init();
-void TSI_update();
+void TSI_init(void);
+void TSI_update(void);
+void TSI0_IRQHandler(void);
 
 #endif
