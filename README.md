@@ -90,3 +90,7 @@ UPDATE:
 - handler-ul intreruperii de TSI0 pare sa se execute fara probleme, singurul lucru dubios este faptul ca in TSICNT se citeste mereu valoarea FFFF, dar macar acum scanarea pare sa se termine
 
 - am pus niste conditii: 1. sa scaneze doar daca nu e deja o scanare in progres (GENCS.SCNIP == 0), 2. sa citeasca din TSICNT doar cand a terminat de scanat (GENCS.EOSF == 1). acum in TSICNT nu mai am FFFF, dar ramane la 12. observ ca dupa scanare, cand incerc sa citesc, tsichannel este setat la 0. parerea mea este ca citesc de pe canalul gresit sau ceva de genul, si ar trebui sa setez canalul in alta parte, nu in functia de scanare
+
+- am rezolvat issue #3 : codul de TSI acum foloseste intreruperi si pare sa functioneze bine
+
+- problema noua : acum TSI readings este actualizat in aplicatia python doar la fiecare reset cpu => probabil citesc doar prima valoarea transmisa si ramane asa

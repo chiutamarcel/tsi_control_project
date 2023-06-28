@@ -37,7 +37,7 @@ def serial_com():
         if (ser.in_waiting == 0):
             ser.write(b'c') 
 
-        #sleep(300/1000) # sleep 300 ms 
+        # sleep(300/1000) # sleep 300 ms 
 
 
     ser.reset_input_buffer()

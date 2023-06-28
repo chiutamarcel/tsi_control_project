@@ -23,7 +23,7 @@ uint16_t scan(){
 	uint16_t cnt = 0;
 	
 	// Reset out of range bit
-	//TSI0->GENCS &= ~TSI_GENCS_OUTRGF_MASK;
+	TSI0->GENCS &= ~TSI_GENCS_OUTRGF_MASK;
 	
 	// Start scan
 	TSI0->DATA |= TSI_DATA_SWTS_MASK;
@@ -66,7 +66,9 @@ void TSI_update(){
 
 void TSI0_IRQHandler() {
 	// if a scan has ended, read the tsicnt
-	if ( ((TSI0->GENCS & TSI_GENCS_EOSF_MASK) >> TSI_GENCS_EOSF_SHIFT) == 1)
+	if ( ((TSI0->GENCS & TSI_GENCS_EOSF_MASK) >> TSI_GENCS_EOSF_SHIFT) == 1) {
 		TSI_Readings = (TSI0->DATA & TSI_DATA_TSICNT_MASK) >> TSI_DATA_TSICNT_SHIFT;
+		TSI0->GENCS |= TSI_GENCS_EOSF_MASK;
+	}
 }
 
