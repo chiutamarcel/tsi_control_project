@@ -87,4 +87,6 @@ UPDATE:
 
 - am decis sa incerc sa lucrez cu intreruperi si pentru TSI pentru a evita problemele legate de flag-ul EOSF, flag care pare sa fie setat pe 1 o instantanee => pot aparea probleme daca nu apuca while-ul sa vada acea valoare de 1 in acel moment precis
 
-- handler-ul intreruperii de TSI0 pare sa se execute fara probleme, singurul lucru dubios este faptul ca in TSICNT se citeste mereu valoarea FFFF
+- handler-ul intreruperii de TSI0 pare sa se execute fara probleme, singurul lucru dubios este faptul ca in TSICNT se citeste mereu valoarea FFFF, dar macar acum scanarea pare sa se termine
+
+- am pus niste conditii: 1. sa scaneze doar daca nu e deja o scanare in progres (GENCS.SCNIP == 0), 2. sa citeasca din TSICNT doar cand a terminat de scanat (GENCS.EOSF == 1). acum in TSICNT nu mai am FFFF, dar ramane la 12. observ ca dupa scanare, cand incerc sa citesc, tsichannel este setat la 0. parerea mea este ca citesc de pe canalul gresit sau ceva de genul, si ar trebui sa setez canalul in alta parte, nu in functia de scanare
