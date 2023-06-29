@@ -58,9 +58,17 @@ def serial_com():
 
             h,s,l,a = bg_color.hsla
 
-            h = (out - tsi_min) / (tsi_max - tsi_min) 
+            h = (out - tsi_min) / (tsi_max - tsi_min)
 
-            bg_color.hsla = int(float(h) * 360), int(s), int(l), int(a)
+            h = int(float(h) * 360)
+
+            if ( h > 360 ):
+                h = 360
+
+            if ( h < 0 ):
+                h = 0
+
+            bg_color.hsla = int(h), int(s), int(l), int(a)
 
         # send a character to continue the transmission
         if (ser.in_waiting == 0):

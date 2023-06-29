@@ -67,6 +67,8 @@ void TSI_update(){
 
 void TSI0_IRQHandler() {
 	// if a scan has ended, read the tsicnt
+	while ( ( TSI0-> GENCS & TSI_GENCS_SCNIP_MASK ) != 0 );
+	
 	if ( ((TSI0->GENCS & TSI_GENCS_EOSF_MASK) >> TSI_GENCS_EOSF_SHIFT) == 1) {
 		TSI_Readings = (TSI0->DATA & TSI_DATA_TSICNT_MASK) >> TSI_DATA_TSICNT_SHIFT;
 		TSI0->GENCS |= TSI_GENCS_EOSF_MASK;
