@@ -95,5 +95,8 @@ void initUART0(uint32_t baud_rate)
 void UART0_IRQHandler(void) {
 	//UART0_Transmit(50);
 	//UART0_Transmit(UART_output);
-	UART0_Transmit(TSI_Readings);
+	//UART0_Transmit(TSI_Readings);
+	uint8_t tsi_scnip = (TSI0->GENCS & TSI_GENCS_SCNIP_MASK) >> TSI_GENCS_SCNIP_SHIFT;
+	
+	UART0_Transmit(tsi_scnip);
 }

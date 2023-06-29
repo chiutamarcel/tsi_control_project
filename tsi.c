@@ -55,6 +55,7 @@ void TSI_init(){
 	TSI0->GENCS &=	~TSI_GENCS_STM_MASK;		// Enable software interrupt mode
 	
 	NVIC_EnableIRQ(TSI0_IRQn);
+	NVIC_SetPriority(TSI0_IRQn, 0);
 }
 
 void TSI_update(){

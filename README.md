@@ -94,3 +94,17 @@ UPDATE:
 - am rezolvat issue #3 : codul de TSI acum foloseste intreruperi si pare sa functioneze bine
 
 - problema noua : acum TSI readings este actualizat in aplicatia python doar la fiecare reset cpu => probabil citesc doar prima valoarea transmisa si ramane asa
+
+- am oprit programul in timpul executarii si uitandu-ma in registrul de TSI, am observat ca defapt se intampla acelasi lucru: flag-ul de SCNIP ( scan in progress ) ramane 1 => scanarea nu se termina => de aia nu se schimba valoarea in aplicatia python. doar prima scanare aduce un rezultat, dupa ramane blocat in scan
+
+UPDATE:
+
+- daca nu opresc programul, dar in schimb pun doar breakpoint-uri nu se intampla problema cu blocarea in scan => s-ar putea sa nu fie o problema reala, ci doar de la oprirea brusca a programului
+
+UPDATE:
+
+- daca transmit flagul scnip prin portul serial in loc de a transmite TSI_Readings, se transmite mereu 1 => scnip s-ar putea chiar sa fie blocat pe 1, dar in cazul asta n-ar fi trebuit sa mai intre in breakpoint....
+
+29-06-2023
+
+- daca pun cate un breakpoint la fiecare dintre cele 2 handlere, transmite scanip = 0 catre aplicatia python => merge cum ar fi trebuit sa mearga, doar daca ii pun breakpoint-uri
