@@ -108,3 +108,7 @@ UPDATE:
 29-06-2023
 
 - daca pun cate un breakpoint la fiecare dintre cele 2 handlere, transmite scanip = 0 catre aplicatia python => merge cum ar fi trebuit sa mearga, doar daca ii pun breakpoint-uri
+
+- am continuat cu dezovltarea aplicatiei python ca sa am totul pregatit in caz ca reusesc sa rezolv problema, si sa imi devotez tot restul timpului la rezolvarea problemei fara a pierde progres potential
+
+- am terminat aplicatia python, care afiseaza o culoare din intreg spectrul, in functie de valoarea citita de la modulul TSI
