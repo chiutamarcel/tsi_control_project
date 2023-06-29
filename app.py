@@ -8,11 +8,13 @@ import pygame
 from time import sleep
 
 running=True
-color_rgb = (255,255,0)
+bg_color = pygame.Color(255,0,0)
+tsi_max = 160
+tsi_min = 20
 
 def pygame_handler():
     global running
-    global color_rgb
+    global bg_color
 
     pygame.init();
     screen = pygame.display.set_mode((300,300))
@@ -23,7 +25,7 @@ def pygame_handler():
             if event.type == pygame.QUIT:
                 running = False
 
-        screen.fill(pygame.Color(color_rgb))
+        screen.fill(bg_color)
         pygame.display.flip()
         clock.tick(60)
 
@@ -32,7 +34,7 @@ def end_serial_com():
     running=False
 
 def serial_com():
-    global color_rgb
+    global bg_color
 
     ser = serial.Serial(
         port="COM5",
@@ -47,17 +49,18 @@ def serial_com():
         ser.reset_input_buffer()
         ser.reset_output_buffer()
 
-        out = ord(ser.read(1))
+        out = ser.read(1)
 
         if out:
-            print(str(time.time()) + " Out:" + str(out))
+            print(str(time.time()) + " Out:" + str(ord(out)))
 
-        #print("in_waiting: " + str(ser.in_waiting))
-        #print("out_waiting : " + str(ser.out_waiting))
-        if (out > 255 ) :
-            out = 255
+            out = ord(out)
 
-        color_rgb = (out, 255, 0)
+            h,s,l,a = bg_color.hsla
+
+            h = (out - tsi_min) / (tsi_max - tsi_min) 
+
+            bg_color.hsla = int(float(h) * 360), int(s), int(l), int(a)
 
         # send a character to continue the transmission
         if (ser.in_waiting == 0):
