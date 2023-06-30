@@ -10,14 +10,17 @@ uint16_t TSI_Readings = 0;
 //uint8_t status = 0;
 
 int main(){
-	TSI_init();
 	initUART0(BAUD_RATE);
-	
+	TSI_init();
+
 	while(1) {
-		//status = 0;
-		TSI_update();
-		//UART_output = TSI_Readings;
+		
 	}
+	//while(1) {
+		//status = 0;
+	//	TSI_update();
+		//UART_output = TSI_Readings;
+	//}
 	
 	return 0;
 }

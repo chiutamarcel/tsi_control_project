@@ -1,4 +1,5 @@
 #include "tsi.h"
+#include "Uart.h"
 
 #define TSI_CH_MAIN (uint8_t)9
 #define TSI_CH_SECONDARY (uint8_t)10
@@ -28,14 +29,6 @@ uint16_t scan(){
 	// Start scan
 	TSI0->DATA |= TSI_DATA_SWTS_MASK;
 	
-	/*
-	
-	// Wait until scan has ended
-	while((TSI0->GENCS & TSI_GENCS_EOSF_MASK) == 0);
-	cnt = (TSI0->DATA & TSI_DATA_TSICNT_MASK) >> TSI_DATA_TSICNT_SHIFT;
-	
-	*/
-	
 	
 	return cnt;
 }
@@ -56,6 +49,8 @@ void TSI_init(){
 	
 	NVIC_EnableIRQ(TSI0_IRQn);
 	NVIC_SetPriority(TSI0_IRQn, 0);
+	
+	scan();
 }
 
 void TSI_update(){
@@ -66,12 +61,15 @@ void TSI_update(){
 }
 
 void TSI0_IRQHandler() {
-	// if a scan has ended, read the tsicnt
-	while ( ( TSI0-> GENCS & TSI_GENCS_SCNIP_MASK ) != 0 );
 	
 	if ( ((TSI0->GENCS & TSI_GENCS_EOSF_MASK) >> TSI_GENCS_EOSF_SHIFT) == 1) {
 		TSI_Readings = (TSI0->DATA & TSI_DATA_TSICNT_MASK) >> TSI_DATA_TSICNT_SHIFT;
 		TSI0->GENCS |= TSI_GENCS_EOSF_MASK;
+		UART0_Transmit(TSI_Readings);
+
+		for (int i = 0; i < 25000; i++);
+
+		scan();
 	}
 }
 
