@@ -9,7 +9,7 @@ from time import sleep
 
 running=True
 bg_color = pygame.Color(255,0,0)
-tsi_max = 4352
+tsi_max = 43176
 tsi_min = 1184
 
 def pygame_handler():
@@ -62,12 +62,6 @@ def serial_com():
 
             out = (out2 << 8) | out1
             print(str(time.time()) + " Out:" + str(out))
-
-            if (out < tsi_min):
-                tsi_min = out
-
-            if (out > tsi_max):
-                tsi_max = out
 
             h,s,l,a = bg_color.hsla
 

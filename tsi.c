@@ -4,8 +4,14 @@
 #define TSI_CH_MAIN (uint8_t)9
 #define TSI_CH_SECONDARY (uint8_t)10
 
+#define SAMPLING_RATE 100
+
 void selectChannel(uint8_t channel);
 uint16_t scan();
+
+uint32_t sum = 0;
+uint16_t avg = 0;
+uint16_t count = 0;
 
 
 void selectChannel(uint8_t channel){
@@ -63,11 +69,26 @@ void TSI_update(){
 void TSI0_IRQHandler() {
 	
 	if ( ((TSI0->GENCS & TSI_GENCS_EOSF_MASK) >> TSI_GENCS_EOSF_SHIFT) == 1) {
+		
+		
 		TSI_Readings = (TSI0->DATA & TSI_DATA_TSICNT_MASK) >> TSI_DATA_TSICNT_SHIFT;
 		TSI0->GENCS |= TSI_GENCS_EOSF_MASK;
-		UART0_Transmit(TSI_Readings);
+		
+		sum += TSI_Readings;
+		
+		if (count >= SAMPLING_RATE){
+			
+			avg = sum / SAMPLING_RATE;
+			
+			UART0_Transmit(avg);
+			
+			sum = 0;
+			count = 0;
+		}
+		
+		count++;
 
-		for (int i = 0; i < 25000; i++);
+		for (int i = 0; i < 2500; i++);
 
 		scan();
 	}
