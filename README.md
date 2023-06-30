@@ -112,3 +112,9 @@ UPDATE:
 - am continuat cu dezovltarea aplicatiei python ca sa am totul pregatit in caz ca reusesc sa rezolv problema, si sa imi devotez tot restul timpului la rezolvarea problemei fara a pierde progres potential
 
 - am terminat aplicatia python, care afiseaza o culoare din intreg spectrul, in functie de valoarea citita de la modulul TSI
+
+30-06-2023
+
+- intr-un final, am rezolvat privind blocarea in scanare. ce trebuia sa fac era sa am un delay intre fiecare scanare, probabil pentru a lasa circuitul sa isi revina intr-o stare stabila
+
+- am terminat proiectul
