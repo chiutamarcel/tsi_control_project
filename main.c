@@ -1,22 +1,33 @@
-#include "MKL25Z4.h"
-
+//#include "MKL25Z4.h"
 #include "Uart.h"
-#include "tsi.h"
+#include "Touch_Sen.h"
 
+#define sampling_number 100
 #define BAUD_RATE (uint32_t)115200
 
-//uint8_t UART_output = 0;
-uint16_t TSI_Readings = 0;
-//uint8_t status = 0;
-
 int main(){
-	TSI_init();
+	uint32_t sum = 0;
+	uint16_t avg = 0;
+	int count = 0;
+	
 	initUART0(BAUD_RATE);
+	Touch_Init();
+	uint32_t i;
 	
 	while(1) {
-		//status = 0;
-		TSI_update();
-		//UART_output = TSI_Readings;
+		if (count >= sampling_number) {
+			avg = (uint16_t)(sum / sampling_number);
+			UART0_Transmit(avg);
+			UART0_Transmit(avg >> 8);
+			sum = 0;
+			count = 0;
+		}
+		
+		sum += (uint32_t)Touch_Scan_LH();
+		count++;
+		
+
+		for ( i = 0 ; i < 2900; i++); // Delay
 	}
 	
 	return 0;

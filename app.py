@@ -9,8 +9,8 @@ from time import sleep
 
 running=True
 bg_color = pygame.Color(255,0,0)
-tsi_max = 160
-tsi_min = 20
+tsi_max = 4352
+tsi_min = 1184
 
 def pygame_handler():
     global running
@@ -35,9 +35,11 @@ def end_serial_com():
 
 def serial_com():
     global bg_color
+    global tsi_max
+    global tsi_min
 
     ser = serial.Serial(
-        port="COM5",
+        port="COM6",
         baudrate=115200,
         bytesize=8,
         timeout=2
@@ -49,12 +51,23 @@ def serial_com():
         ser.reset_input_buffer()
         ser.reset_output_buffer()
 
-        out = ser.read(1)
+        out1 = ser.read(1)
+        out2 = ser.read(1)
 
-        if out:
-            print(str(time.time()) + " Out:" + str(ord(out)))
+        print("out1, out2: " + str(out1) + "" + str(out2))
 
-            out = ord(out)
+        if out1 and out2:
+            out1 = ord(out1)
+            out2 = ord(out2)
+
+            out = (out2 << 8) | out1
+            print(str(time.time()) + " Out:" + str(out))
+
+            # if (out < tsi_min):
+            #     tsi_min = out
+
+            # if (out > tsi_max):
+            #     tsi_max = out
 
             h,s,l,a = bg_color.hsla
 
@@ -71,8 +84,8 @@ def serial_com():
             bg_color.hsla = int(h), int(s), int(l), int(a)
 
         # send a character to continue the transmission
-        if (ser.in_waiting == 0):
-            ser.write(b'c') 
+        #if (ser.in_waiting == 0):
+        #    ser.write(b'c') 
 
         # sleep(300/1000) # sleep 300 ms 
 

@@ -17,20 +17,20 @@ void UART0_Transmit(uint8_t data)
 }
 
 
-uint8_t UART0_receive(void)
-{
-	//Punem in asteptare pana cand registrul de receptie nu este plin
-	while(!(UART0->S1 & UART0_S1_RDRF_MASK)){
-		//status = 1;
-	}
-		return UART0->D;
-	
-	/*
-	if ((UART0->S1 & UART0_S1_RDRF_MASK))
-		return UART0->D;
-	*/
-	
-}
+//uint8_t UART0_receive(void)
+//{
+//	//Punem in asteptare pana cand registrul de receptie nu este plin
+//	while(!(UART0->S1 & UART0_S1_RDRF_MASK)){
+//		//status = 1;
+//	}
+//		return UART0->D;
+//	
+//	/*
+//	if ((UART0->S1 & UART0_S1_RDRF_MASK))
+//		return UART0->D;
+//	*/
+//	
+//}
 
 
 void initUART0(uint32_t baud_rate)
@@ -83,20 +83,10 @@ void initUART0(uint32_t baud_rate)
 	UART0->C2 |= UART0_C2_TCIE(0);
 	
 	//Activare intreruperi la receptie
-	UART0->C2 |= UART0_C2_RIE(1);
+	UART0->C2 |= UART0_C2_RIE(0);
 	
 	UART0->C2 |= ((UART_C2_RE_MASK) | (UART_C2_TE_MASK));
 	
-	NVIC_EnableIRQ(UART0_IRQn);
+	//NVIC_EnableIRQ(UART0_IRQn);
 	
-}
-
-
-void UART0_IRQHandler(void) {
-	//UART0_Transmit(50);
-	//UART0_Transmit(UART_output);
-	UART0_Transmit(TSI_Readings);
-	//uint8_t tsi_scnip = (TSI0->GENCS & TSI_GENCS_SCNIP_MASK) >> TSI_GENCS_SCNIP_SHIFT;
-	
-	//UART0_Transmit(tsi_scnip);
 }
